@@ -1,12 +1,23 @@
 <script setup>
 import { inject, reactive } from '@vue/runtime-core'
+import Filter from './../components/Filter.vue'
 import Posts from './../components/Posts.vue'
 
 const axios = inject('axios')
 
 const url = '/api/posts'
 
-// vars
+// filter handler
+const filter = reactive({
+  selected: '最新貼文',
+  datalist: ['最新貼文', '最舊貼文' , '最熱門貼文']
+})
+
+const changeSelected = (li) => {
+  filter.selected = li
+}
+
+// post handler
 const posts = reactive([])
 
 axios.get(url).then(res => {
@@ -26,14 +37,11 @@ axios.get(url).then(res => {
         <i class="icon-search"></i>
         <i class="icon-cancel"></i>
       </label>
-      <div class="post-filter selector">
-        <div class="selected">
-          <div class="inner">
-            <i class="icon-filter"></i>
-            <span class="text">最新貼文</span>
-          </div>
-        </div>
-      </div>
+      <Filter
+        :selected="filter.selected"
+        :datalist="filter.datalist"
+        @change-selected="changeSelected"
+      />
     </div>
     <!-- post-content -->
     <div class="post-content">
@@ -111,6 +119,7 @@ axios.get(url).then(res => {
       pointer-events: none
 
 .post-content
+  padding-bottom: 40px
   .no-post
     font-size: px(14)
     text-align: center

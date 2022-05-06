@@ -21,10 +21,13 @@ const postSchema = new Schema({
     ref: 'User',
     required: [true, 'field "user" is required']
   },
-  likes: {
-    type: Number,
-    default: 0
-  }
+  likes: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'User',
+      default: []
+    }
+  ]
 }, {
   versionKey: false
 })

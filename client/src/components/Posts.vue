@@ -10,7 +10,6 @@ const timeDiff = {
 }
 
 const useDateFormat = (date) => {
-
   const now = new Date()
   const time = new Date(date)
   const diff = now.getTime() - time.getTime()
@@ -21,15 +20,15 @@ const useDateFormat = (date) => {
     return `${yyyy}/${mm}/${dd}`
   }
   else if (diff < timeDiff.day && diff >= timeDiff.hour) {
-    const hours = now.getHours() - time.getHours()
+    const hours = parseInt(diff / timeDiff.hour)
     return `${hours} 小時前`
   }
   else if (diff < timeDiff.hour && diff >= timeDiff.minute) {
-    const mins = now.getMinutes() - time.getMinutes()
+    const mins = parseInt(diff / timeDiff.minute)
     return `${mins} 分鐘前`
   }
   else {
-    const secs = now.getSeconds() - time.getSeconds()
+    const secs = parseInt(diff / 1000)
     return `${secs} 秒前`
   }
 }
@@ -56,12 +55,15 @@ const useDateFormat = (date) => {
     <div class="tool">
       <div class="like">
         <i class="icon-like"></i>
+        <span class="num" v-if="post.likes.length">{{ post.likes.length }}</span>
       </div>
       <div class="commit">
         <i class="icon-commit"></i>
+        <!-- <span class="num"></span> -->
       </div>
       <div class="share">
         <i class="icon-share"></i>
+        <!-- <span class="num"></span> -->
       </div>
     </div>
   </div>
@@ -138,13 +140,15 @@ const useDateFormat = (date) => {
       display: flex
       justify-content: center
       align-items: center
+      color: var(--light-gray)
       padding: 15px
       cursor: pointer
+      transition: color var(--trans-s)
       &:hover
-        i
-          color: var(--dark-gray)
+        color: var(--dark-gray)
     i
       font-size: 18px
-      color: var(--light-gray)
-      transition: color var(--trans-s)
+    .num
+      font-size: px(13)
+      margin-left: 10px
 </style>

@@ -40,11 +40,11 @@ const postOneOrMany = async (req, res, next) => {
     const { body } = req
     const isArray = Array.isArray(body)
     const getContent = (item) => {
-      const { user, content, image } = item
+      const { user, content, image, likes } = item
       if (!user || !content) {
         error(res, status.errorField)
       }
-      return { user, content, image }
+      return { user, content, image, likes }
     }
     // create data
     let data
