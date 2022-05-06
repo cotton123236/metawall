@@ -1,0 +1,87 @@
+*
+  outline: none
+  -webkit-tap-highlight-color: transparent
+
+:root
+  // --primary-color: #4f72a3
+  // --second-color: #333333
+  // --codebg-color: #f8faff
+  // --hilite-color: #839fee
+  // --link-color: #3377ee
+  --white: #fff
+  --dark-gray: #333
+  --gray: #555
+  --light-gray: #999
+  --dark-white: #eee
+
+  --trans-s: .2s
+  --trans-m: .4s
+  --trans-l: .8s
+  --trans-xl: 1.2s
+  --aost-trans: .8s
+
+html
+  font-size: 100%
+  body
+    font-family: $basic-font
+    background-color: #f8f8f8
+    &::-webkit-scrollbar-track
+      border-radius: 10px
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3)
+    &::-webkit-scrollbar
+      width: 6px
+      +rwdmax(768)
+        display: none
+    &::-webkit-scrollbar-thumb
+      border-radius: 10px
+      background-color: rgba(108, 110, 113, 1)
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3)
+
+
+// space-lr
+.space-lr
+  padding-left: 80px
+  padding-right: 80px
+  +rwdmax(1024)
+    padding-left: 60px
+    padding-right: 60px
+  +rwdmax(767)
+    padding-left: 20px
+    padding-right: 20px
+
+// mw-1200
+.mw-1200
+  max-width: 1200px
+  margin: auto
+
+
+// 元件類
+// selector
+.selector
+  position: relative
+  font-size: px(14)
+  .selected
+    display: flex
+    justify-content: space-between
+    align-items: center
+    min-height: 40px
+    min-width: 140px
+    font-size: px(14)
+    letter-spacing: .02em
+    font-weight: 300
+    color: var(--gray)
+    padding: 10px 20px
+    border: 1px solid var(--dark-white)
+    cursor: pointer
+    &::after
+      font-family: 'icomoon'
+      content: '\e903'
+      font-size: 12px
+      margin-left: 10px
+    .inner
+      display: flex
+      align-items: center
+      justify-content: center
+    .icon-filter
+      font-size: 18px
+      margin-right: 5px
