@@ -9,11 +9,11 @@ const { success, error } = handlers
 // get all
 const getAll = async (req, res, next) => {
   try {
-    const timesort = req.query.timesort === 'asc' ? 'createdAt' : '-createdAt'
+    const timesort = req.query.sort === 'hot' ? { likes: -1 } : req.query.sort === 'timeasc' ? 'createdAt' : '-createdAt'
     const query = req.query.content ? { 'content': new RegExp(req.query.content) } : {}
     const data = await Post.find(query).populate({
       path: 'user',
-      select: 'name photo'
+      select: 'name image'
     }).sort(timesort)
     success(res, data)
   }

@@ -2,7 +2,7 @@
 import { ref, onMounted } from '@vue/runtime-core'
 
 defineProps({
-  selected: String,
+  selected: Object,
   datalist: Array
 })
 
@@ -26,7 +26,7 @@ onMounted(() => {
     <div class="selected">
       <div class="inner">
         <i class="icon-filter"></i>
-        <span class="text">{{ selected }}</span>
+        <span class="text">{{ selected.name }}</span>
       </div>
     </div>
     <div class="datalist">
@@ -36,7 +36,7 @@ onMounted(() => {
           :key="index"
           @click="$emit('changeSelected', li)"
         >
-          {{ li }}
+          {{ li.name }}
         </li>
       </ul>
     </div>

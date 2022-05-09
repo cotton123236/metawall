@@ -14,7 +14,22 @@ const userSchema = new Schema({
     lowercase: true,
     select: false
   },
-  photo: String
+  image: {
+    type: String,
+    default: ''
+  },
+  likes: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'Post'
+    }
+  ],
+  tracks: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'User'
+    }
+  ]
 }, {
   versionKey: false
 })

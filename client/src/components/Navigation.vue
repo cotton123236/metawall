@@ -1,4 +1,6 @@
 <script setup>
+import { reactive } from '@vue/runtime-core'
+
 </script>
 
 <template>
@@ -10,6 +12,10 @@
       <div class="user-name">Wilson</div>
     </div>
     <ul class="user-tools">
+      <li>
+        <i class="icon-add-square"></i>
+        <span>新增貼文</span>
+      </li>
       <li>
         <i class="icon-bell"></i>
         <span>追蹤名單</span>

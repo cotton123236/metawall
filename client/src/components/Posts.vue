@@ -39,7 +39,7 @@ const useDateFormat = (date) => {
   <div class="each-post">
     <div class="info">
       <div class="headshot">
-        <img :src="post.image" alt="user-photo">
+        <img :src="post.user.image" alt="user-photo">
       </div>
       <div class="detail">
         <div class="name">{{ post.user.name }}</div>

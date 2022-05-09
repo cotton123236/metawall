@@ -1,31 +1,103 @@
 <script setup>
-import { inject, reactive } from '@vue/runtime-core'
+import { inject, ref, reactive } from '@vue/runtime-core'
+import { useRoute, useRouter } from 'vue-router'
 import Filter from './../components/Filter.vue'
 import Posts from './../components/Posts.vue'
+import ModalPost from './../components/ModalPost.vue'
+
 
 const axios = inject('axios')
+const route = useRoute()
+const router = useRouter()
+const postUrl = '/api/posts'
 
-const url = '/api/posts'
 
-// filter handler
-const filter = reactive({
-  selected: '最新貼文',
-  datalist: ['最新貼文', '最舊貼文' , '最熱門貼文']
-})
-
-const changeSelected = (li) => {
-  filter.selected = li
+// append
+const appendQuery = async (newQuery) => {
+  // create query
+  const key = Object.keys(newQuery)[0]
+  const value = newQuery[key]
+  const query = Object.assign({}, route.query, newQuery)
+  if (!value) delete query[key]
+  // push query
+  await router.push({ query })
 }
 
 // post handler
 const posts = reactive([])
 
-axios.get(url).then(res => {
-  if (!res.data) return;
-  const { data } = res.data
-  Object.assign(posts, data)
-  console.log(posts)
+const getPosts = () => {
+  // create url from query
+  const { query } = route
+  const keys = Object.keys(query)
+  let url = postUrl
+  keys.forEach((key, i) => {
+    if (i === 0) url += `?${key}=${query[key]}`
+    else url += `&${key}=${query[key]}`
+  })
+  console.log(url)
+  // axios data
+  axios.get(url).then(res => {
+    if (!res.data) return;
+    const { data } = res.data
+    posts.length = 0
+    Object.assign(posts, data)
+    console.log(posts)
+  })
+}
+
+getPosts()
+
+
+// filter handler
+const filterDatalist = reactive([
+  {
+    name: '最新貼文',
+    sort: undefined
+  },
+  {
+    name: '最舊貼文',
+    sort: 'timeasc'
+  },
+  {
+    name: '最熱門貼文',
+    sort: 'hot'
+  },
+])
+const selectedIndex = filterDatalist.findIndex(item => item.sort === route.query.sort)
+const filterSelected = reactive({
+  name: filterDatalist[selectedIndex].name,
+  sort: route.query.sort
 })
+
+const changeSort = async (li) => {
+  if (li.name === filterSelected.name) return;
+  Object.assign(filterSelected, li)
+  const { sort } = li
+  // push query
+  await appendQuery({ sort })
+  // then get data
+  getPosts()
+}
+
+
+// search content handler
+const searchInput = ref(null)
+
+const searchContent = async ($event) => {
+  const { value } = $event.target
+  // push query
+  await appendQuery({
+    content: value
+  })
+  // then get data
+  getPosts()
+}
+
+const clearInput = () => {
+  searchInput.value.value = ''
+}
+
 </script>
 
 <template>
@@ -33,14 +105,14 @@ axios.get(url).then(res => {
     <!-- post-tools -->
     <div class="post-tools">
       <label class="post-search">
-        <input type="text" placeholder="搜尋貼文">
+        <input type="text" placeholder="搜尋貼文" ref="searchInput" @keyup.enter="searchContent">
         <i class="icon-search"></i>
-        <i class="icon-cancel"></i>
+        <i class="icon-cancel" @click="clearInput"></i>
       </label>
       <Filter
-        :selected="filter.selected"
-        :datalist="filter.datalist"
-        @change-selected="changeSelected"
+        :selected="filterSelected"
+        :datalist="filterDatalist"
+        @change-selected="changeSort"
       />
     </div>
     <!-- post-content -->
@@ -57,6 +129,7 @@ axios.get(url).then(res => {
       </div>
     </div>
   </section>
+  <ModalPost />
 </template>
 
 <style lang="sass">
@@ -116,7 +189,6 @@ axios.get(url).then(res => {
       transform: translate(20px ,-50%)
       padding: 5px
       cursor: pointer
-      pointer-events: none
 
 .post-content
   padding-bottom: 40px

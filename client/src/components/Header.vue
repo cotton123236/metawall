@@ -21,7 +21,7 @@
 
 header
   position: fixed
-  z-index: 10
+  z-index: 9
   top: 0
   left: 0
   width: 100%
