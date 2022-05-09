@@ -26,7 +26,7 @@ const appendQuery = async (newQuery) => {
 // post handler
 const posts = reactive([])
 
-const getPosts = () => {
+const getPosts = async () => {
   // create url from query
   const { query } = route
   const keys = Object.keys(query)
@@ -35,15 +35,13 @@ const getPosts = () => {
     if (i === 0) url += `?${key}=${query[key]}`
     else url += `&${key}=${query[key]}`
   })
-  console.log(url)
   // axios data
-  axios.get(url).then(res => {
-    if (!res.data) return;
-    const { data } = res.data
-    posts.length = 0
-    Object.assign(posts, data)
-    console.log(posts)
-  })
+  const res = await axios.get(url)
+  if (!res.data) return;
+  const { data } = res.data
+  posts.length = 0
+  Object.assign(posts, data)
+  console.log(posts)
 }
 
 getPosts()

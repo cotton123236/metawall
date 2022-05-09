@@ -1,5 +1,9 @@
 <script setup>
+import { storeToRefs } from 'pinia'
+import { useStore } from './../stores/stores'
 
+const store = useStore()
+const { user } = storeToRefs(store)
 </script>
 
 <template>
@@ -9,7 +13,7 @@
       <div class="user-wrap">
         <!-- <div class="user-name">Wilson</div> -->
         <div class="user-photo">
-          <img src="https://picsum.photos/200/200?random=1" alt="user-photo">
+          <img :src="user.image" alt="user-photo">
         </div>
       </div>
     </div>
