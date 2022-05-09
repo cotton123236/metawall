@@ -4,5 +4,6 @@ const usersController = require('./../controllers/usersController')
 
 /* GET users listing. */
 router.get('/', usersController.getAll)
+router.get('/:id', usersController.getById)
 
 module.exports = router

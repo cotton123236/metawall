@@ -2,8 +2,12 @@
 import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
 
+
 const store = useStore()
+
 const { user } = storeToRefs(store)
+const { changeModalPostState } = store
+
 </script>
 
 <template>
@@ -15,15 +19,15 @@ const { user } = storeToRefs(store)
       <div class="user-name">{{ user.name }}</div>
     </div>
     <ul class="user-tools">
-      <li>
+      <li @click="changeModalPostState">
         <i class="icon-add-square"></i>
         <span>新增貼文</span>
       </li>
-      <li>
+      <li class="disable">
         <i class="icon-bell"></i>
         <span>追蹤名單</span>
       </li>
-      <li>
+      <li class="disable">
         <i class="icon-like"></i>
         <span>收藏文章</span>
       </li>
@@ -67,9 +71,13 @@ nav
       color: var(--dark-gray)
       padding: 15px 20px
       transition: background var(--trans-m)
+      cursor: pointer
       // border-radius: 4px
       &:hover
         background-color: var(--dark-white)
+      &.disable
+        pointer-events: none
+        opacity: .2
       i
         // display: flex
         // justify-content: center

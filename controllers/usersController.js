@@ -16,7 +16,20 @@ const getAll = async (req, res, next) => {
   }
 }
 
+// get by id
+const getById = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const data = await User.findById(id)
+    success(res, data)
+  }
+  catch(err) {
+    error(res, status.error, err)
+  }
+}
+
 
 module.exports = {
-  getAll
+  getAll,
+  getById
 }

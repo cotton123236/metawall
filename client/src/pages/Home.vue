@@ -1,14 +1,20 @@
 <script setup>
 import { inject, ref, reactive } from '@vue/runtime-core'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useStore } from './../stores/stores'
 import Filter from './../components/Filter.vue'
 import Posts from './../components/Posts.vue'
-import ModalPost from './../components/ModalPost.vue'
 
 
 const axios = inject('axios')
 const route = useRoute()
 const router = useRouter()
+const store = useStore()
+
+const { posts } = storeToRefs(store)
+const { setPost } = store
+
 const postUrl = '/api/posts'
 
 
@@ -24,8 +30,6 @@ const appendQuery = async (newQuery) => {
 }
 
 // post handler
-const posts = reactive([])
-
 const getPosts = async () => {
   // create url from query
   const { query } = route
@@ -38,10 +42,8 @@ const getPosts = async () => {
   // axios data
   const res = await axios.get(url)
   if (!res.data) return;
-  const { data } = res.data
-  posts.length = 0
-  Object.assign(posts, data)
-  console.log(posts)
+  setPost(res.data.data)
+  console.log(posts.value)
 }
 
 getPosts()
@@ -127,7 +129,6 @@ const clearInput = () => {
       </div>
     </div>
   </section>
-  <ModalPost />
 </template>
 
 <style lang="sass">

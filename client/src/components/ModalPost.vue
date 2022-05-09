@@ -1,32 +1,61 @@
 <script setup>
 import { inject, ref } from '@vue/runtime-core'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
 
 const axios = inject('axios')
+const route = useRoute()
 const store = useStore()
-const { user } = storeToRefs(store)
+const { user, posts } = storeToRefs(store)
+const { setPost, changeModalPostState, changeModalLoaderState } = store
 
 const postUrl = '/api/posts'
+
+// get post data handler
+const getPosts = async () => {
+  // create url from query
+  const { query } = route
+  const keys = Object.keys(query)
+  let url = postUrl
+  keys.forEach((key, i) => {
+    if (i === 0) url += `?${key}=${query[key]}`
+    else url += `&${key}=${query[key]}`
+  })
+  // axios data
+  const res = await axios.get(url)
+  if (!res.data) return;
+  setPost(res.data.data)
+}
+
+getPosts()
 
 // post data handler
 const postContent = ref('')
 
 const postNewPost = async () => {
   if (!postContent.value) return;
+  changeModalLoaderState()
   const data = {
     content: postContent.value,
     user: user.value._id
   }
-  const res = await axios.post(postUrl, data)
-  // console.log(res)
+  try {
+    const res = await axios.post(postUrl, data)
+    changeModalLoaderState()
+    changeModalPostState()
+    getPosts()
+  }
+  catch {}
 }
+
 </script>
 
 <template>
   <div class="modal-wrapper modal-post">
     <div class="modal-content">
       <div class="modal">
+        <div class="close-btn" @click="changeModalPostState"></div>
         <div class="modal-head">
           <span>新增貼文</span>
         </div>
@@ -42,23 +71,33 @@ const postNewPost = async () => {
           </div>
         </div>
         <div class="modal-foot">
-          <div class="submit-btn" @click="postNewPost">發布貼文</div>
+          <div
+            class="submit-btn"
+            :class="{ disable: !postContent }"
+            @click="postNewPost"
+          >發布貼文</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import ./../assets/sass/mixin
 
 // modal-post
 .modal
+  position: relative
   width: 90%
   max-width: 600px
   // border-radius: 8px
   background-color: #fff
   margin: auto
+  .close-btn
+    position: absolute
+    z-index: 2
+    top: 17px
+    right: 20px
   .modal-head
     position: relative
     font-size: px(14)
@@ -93,7 +132,7 @@ const postNewPost = async () => {
     textarea
       resize: none
       width: 100%
-      min-height: 15vh
+      min-height: 18vh
       font-family: $basic-font
       font-size: px(14)
       line-height: 1.5
