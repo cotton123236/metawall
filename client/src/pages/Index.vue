@@ -20,14 +20,16 @@ const { useModalPost, useModalLoader } = storeToRefs(store)
     <!-- header -->
     <Header />
     <!-- main -->
-    <main class="mw-1200">
-      <!-- nav -->
-      <div class="nav-wrap">
-        <Navigation />
-      </div>
-      <!-- view -->
-      <div class="main-content">
-        <router-view></router-view>
+    <main class="space-lr">
+      <div class="main-content mw-1200">
+        <!-- nav -->
+        <div class="nav-wrap">
+          <Navigation />
+        </div>
+        <!-- view -->
+        <div class="main-view">
+          <router-view></router-view>
+        </div>
       </div>
       <!-- modal -->
       <Transition name="clip">
@@ -41,17 +43,29 @@ const { useModalPost, useModalLoader } = storeToRefs(store)
 </template>
 
 <style lang="sass">
+@import ./../assets/sass/mixin
+
 // main
 main
-  display: flex
   padding-top: 110px
+  +rwdmax(767)
+    padding-top: 90px
   
   .main-content
+    display: flex
+  .main-view
     flex: 1
     padding-left: 20px
     padding-right: 20px
+    +rwdmax(767)
+      padding-left: 0
+      padding-right: 0
   .nav-wrap
     width: 350px
+    +rwdmax(1200)
+      width: 300px
+    +rwdmax(900)
+      display: none
 
 .fade-enter-active,
 .fade-leave-active

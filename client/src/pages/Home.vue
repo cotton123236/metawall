@@ -128,8 +128,11 @@ const clearInput = () => {
 // post-tools
 .post-tools
   display: flex
-  // .post-filter
-
+  +rwdmax(500)
+    flex-direction: column
+  .filter
+    +rwdmax(500)
+      margin-top: 5px
   .post-search
     flex: 1
     position: relative
@@ -140,6 +143,8 @@ const clearInput = () => {
     padding: 10px 20px
     margin-right: 10px
     overflow: hidden
+    +rwdmax(500)
+      width: 100%
     input[type="text"]
       width: 100%
       border: none

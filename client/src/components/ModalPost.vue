@@ -95,6 +95,8 @@ const postNewPost = async () => {
     line-height: 1.5
     padding: 20px
     text-align: center
+    +rwdmax(767)
+      padding: 20px 10px
     &::after
       position: absolute
       content: ''
@@ -104,8 +106,13 @@ const postNewPost = async () => {
       left: 20px
       bottom: 0
       background-color: var(--dark-white)
+      +rwdmax(767)
+        width: calc(100% - 20px)
+        left: 10px
   .modal-body
     padding: 20px 40px
+    +rwdmax(767)
+      padding: 20px 20px
     .info
       display: flex
       align-items: center
@@ -134,5 +141,7 @@ const postNewPost = async () => {
       padding: 20px 0
   .modal-foot
     padding: 20px
+    +rwdmax(767)
+      padding: 10px
   
 </style>
