@@ -4,31 +4,22 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
 
+const { VITE_API_URL } = import.meta.env
 const axios = inject('axios')
 const route = useRoute()
 const store = useStore()
-const { user, posts } = storeToRefs(store)
-const { setPost, changeModalPostState, changeModalLoaderState } = store
+const { user } = storeToRefs(store)
+const { setPosts, changeModalPostState, changeModalLoaderState } = store
 
-const postUrl = '/api/posts'
+const postUrl = `${VITE_API_URL}/api/posts`
 
-// get post data handler
+// post handler
 const getPosts = async () => {
-  // create url from query
+  // get query
   const { query } = route
-  const keys = Object.keys(query)
-  let url = postUrl
-  keys.forEach((key, i) => {
-    if (i === 0) url += `?${key}=${query[key]}`
-    else url += `&${key}=${query[key]}`
-  })
-  // axios data
-  const res = await axios.get(url)
-  if (!res.data) return;
-  setPost(res.data.data)
+  // set posts
+  await setPosts(postUrl, query)
 }
-
-getPosts()
 
 // post data handler
 const postContent = ref('')

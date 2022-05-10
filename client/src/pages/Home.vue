@@ -7,15 +7,16 @@ import Filter from './../components/Filter.vue'
 import Posts from './../components/Posts.vue'
 
 
+const { VITE_API_URL } = import.meta.env
 const axios = inject('axios')
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
 
 const { posts } = storeToRefs(store)
-const { setPost } = store
+const { setPosts } = store
 
-const postUrl = '/api/posts'
+const postUrl = `${VITE_API_URL}/api/posts`
 
 
 // append
@@ -31,19 +32,10 @@ const appendQuery = async (newQuery) => {
 
 // post handler
 const getPosts = async () => {
-  // create url from query
+  // get query
   const { query } = route
-  const keys = Object.keys(query)
-  let url = postUrl
-  keys.forEach((key, i) => {
-    if (i === 0) url += `?${key}=${query[key]}`
-    else url += `&${key}=${query[key]}`
-  })
-  // axios data
-  const res = await axios.get(url)
-  if (!res.data) return;
-  setPost(res.data.data)
-  console.log(posts.value)
+  // set posts
+  await setPosts(postUrl, query)
 }
 
 getPosts()
