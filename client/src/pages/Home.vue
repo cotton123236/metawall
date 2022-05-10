@@ -74,20 +74,20 @@ const changeSort = async (li) => {
 
 
 // search content handler
-const searchInput = ref(null)
+const searchValue = ref('')
 
-const searchContent = async ($event) => {
-  const { value } = $event.target
+const searchPosts = async () => {
+  // const { value } = $event.target
   // push query
   await appendQuery({
-    content: value
+    content: searchValue.value
   })
   // then get data
   getPosts()
 }
 
 const clearInput = () => {
-  searchInput.value.value = ''
+  searchValue.value = ''
 }
 
 </script>
@@ -97,7 +97,7 @@ const clearInput = () => {
     <!-- post-tools -->
     <div class="post-tools">
       <label class="post-search">
-        <input type="text" placeholder="搜尋貼文" ref="searchInput" @keyup.enter="searchContent">
+        <input type="text" placeholder="搜尋貼文" v-model="searchValue" @keyup.enter="searchPosts">
         <i class="icon-search"></i>
         <i class="icon-cancel" @click="clearInput"></i>
       </label>

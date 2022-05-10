@@ -27,7 +27,8 @@ const getById = async (req, res, next) => {
   try {
     const { id } = req.params
     const data = await Post.findById(id)
-    success(res, [data])
+    if (data) success(res, [data])
+    else error(res, status.errorId)
   }
   catch(err) {
     error(res, status.errorId, err)
@@ -77,7 +78,8 @@ const deleteById = async (req, res, next) => {
   try {
     const { id } = req.params
     const data = [await Post.findByIdAndDelete(id)]
-    success(res, data)
+    if (data) success(res, [data])
+    else error(res, status.errorId)
   }
   catch(err) {
     error(res, status.error, err)
@@ -98,7 +100,8 @@ const patchById = async (req, res, next) => {
     if (content) patches.content = content
     await Post.findByIdAndUpdate(id, patches)
     const data = await Post.findById(id)
-    success(res, data)
+    if (data) success(res, [data])
+    else error(res, status.errorId)
   }
   catch(err) {
     error(res, status.error, err)
