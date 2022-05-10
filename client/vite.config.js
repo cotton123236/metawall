@@ -7,7 +7,10 @@ dotenv.config({ path: './../config.env' })
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()]
+  plugins: [vue()],
+  build: {
+    outDir: './../public'
+  }
   // server: {
   //   proxy: {
   //     '/api': `http://localhost:${process.env.PORT}/`,
