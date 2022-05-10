@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "1b40c392-72dc-4634-bce3-4d589b28a807",
+		"name": "metawall",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/users",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/users/626e913136674e3b1cdd7049",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"users",
+						"626e913136674e3b1cdd7049"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/posts",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get post by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/posts/6274ef672dc7b121b01cb72a",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"posts",
+						"6274ef672dc7b121b01cb72a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post one or many",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"626e91ea36674e3b1cdd704b\",\r\n    \"content\": \"黎明之前 黑夜無眠<br>悄悄地靜止了時間<br>攤開所有 的是與非<br>面對自己 和解\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/posts",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all posts",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/posts",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete one post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/posts/6279bb397c36f9f09178add1",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"posts",
+						"6279bb397c36f9f09178add1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"晴朗的天空 我們都迷過路<br>下雨的天空 想辦法找去處<br>草叢裡有人 別停下腳步\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://vast-wildwood-59278.herokuapp.com/api/posts/62792e681d0b22d988679114",
+					"protocol": "https",
+					"host": [
+						"vast-wildwood-59278",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"posts",
+						"62792e681d0b22d988679114"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
