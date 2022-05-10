@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref, reactive } from '@vue/runtime-core'
+import { ref, reactive } from '@vue/runtime-core'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
@@ -8,7 +8,6 @@ import Posts from './../components/Posts.vue'
 
 
 const { VITE_API_URL } = import.meta.env
-const axios = inject('axios')
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
