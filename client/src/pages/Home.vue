@@ -73,7 +73,8 @@ const changeSort = async (li) => {
 
 
 // search content handler
-const searchValue = ref('')
+const { content } = route.query || ''
+const searchValue = ref(content)
 
 const searchPosts = async () => {
   // const { value } = $event.target
@@ -146,7 +147,7 @@ const clearInput = () => {
     +rwdmax(500)
       width: 100%
     input[type="text"]
-      width: 100%
+      width: 90%
       border: none
       background: none
       font-family: $basic-font
@@ -168,6 +169,7 @@ const clearInput = () => {
           opacity: 1
           transform: translate(0, -50%)
           pointer-events: auto
+          transition: transform var(--trans-s), opacity var(--trans-s)
     .icon-search, .icon-cancel
       position: absolute
       top: 50%
@@ -184,6 +186,7 @@ const clearInput = () => {
       transform: translate(20px ,-50%)
       padding: 5px
       cursor: pointer
+      transition: transform var(--trans-s) .2s, opacity var(--trans-s) .2s
 
 .post-content
   padding-bottom: 40px

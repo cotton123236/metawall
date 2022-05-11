@@ -27,6 +27,7 @@ const getById = async (req, res, next) => {
   try {
     const { id } = req.params
     const data = await Post.findById(id)
+    console.log(await Post.findById(id));
     if (data) success(res, [data])
     else error(res, status.errorId)
   }

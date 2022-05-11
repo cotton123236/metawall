@@ -47,7 +47,11 @@ nav
   .user-wrap
     display: flex
     align-items: center
-    padding: 0 20px
+    padding: 12px
+    background-color: #fff
+    border-radius: 40px
+    border: 1px solid var(--dark-white)
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1)
   .user-photo
     width: 50px
     height: 50px
@@ -63,18 +67,26 @@ nav
     color: var(--gray)
 
   .user-tools
-    margin-top: 40px
-    // padding-left: 20px
+    border-radius: 20px
+    // background-color: #fff
+    // border: 1px solid var(--dark-white)
+    // box-shadow: 0 0 5px rgba(0, 0, 0, .1)
+    // padding: 12px
+    margin-top: 20px
     li
       display: flex
       align-items: center
       color: var(--dark-gray)
+      border-radius: 25px
       padding: 15px 20px
-      transition: background var(--trans-m)
+      transition: var(--trans-m)
+      border: 1px solid transparent
       cursor: pointer
       // border-radius: 4px
       &:hover
-        background-color: var(--dark-white)
+        // background-color: #fff
+        // box-shadow: 0 0 5px rgba(0, 0, 0, .1)
+        // border: 1px solid var(--dark-white)
       &.disable
         pointer-events: none
         opacity: .2

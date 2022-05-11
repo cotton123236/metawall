@@ -55,8 +55,8 @@ main
     display: flex
   .main-view
     flex: 1
-    padding-left: 20px
-    padding-right: 20px
+    padding-left: 30px
+    // padding-right: 20px
     +rwdmax(767)
       padding-left: 0
       padding-right: 0
