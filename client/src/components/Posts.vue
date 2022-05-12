@@ -78,7 +78,8 @@ const useDateFormat = (date) => {
   border-radius: 8px
   background-color: #fff
   box-shadow: 0 0 5px rgba(0, 0, 0, .1)
-  margin-top: 20px
+  &:not(:first-child)
+    margin-top: 20px
   .info
     position: relative
     display: flex

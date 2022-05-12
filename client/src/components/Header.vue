@@ -1,17 +1,67 @@
 <script setup>
+import { reactive } from '@vue/runtime-core'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
+import Filter from './../components/Filter.vue'
+import Searcher from './../components/Searcher.vue'
 
+
+const { VITE_API_URL } = import.meta.env
 const store = useStore()
+const route = useRoute()
 const { user } = storeToRefs(store)
+const { appendQuery, getPosts } = store
+
+const postUrl = `${VITE_API_URL}/api/posts`
+
+
+// filter handler
+const filterDatalist = reactive([
+  {
+    name: '最新貼文',
+    sort: undefined
+  },
+  {
+    name: '最舊貼文',
+    sort: 'timeasc'
+  },
+  {
+    name: '最熱門貼文',
+    sort: 'hot'
+  },
+])
+const selectedIndex = filterDatalist.findIndex(item => item.sort === route.query.sort)
+const filterSelected = reactive({
+  name: filterDatalist[selectedIndex].name,
+  sort: route.query.sort
+})
+
+const changeSort = async (li) => {
+  if (li.name === filterSelected.name) return;
+  Object.assign(filterSelected, li)
+  const { sort } = li
+  // push query
+  await appendQuery(route, { sort })
+  // then get data
+  getPosts(route, postUrl)
+}
+
 </script>
 
 <template>
   <header class="space-lr">
     <div class="container mw-1200">
+      <!-- logo -->
       <router-link class="logo" to="/">MetaWall</router-link>
-      <div class="user-wrap">
-        <!-- <div class="user-name">Wilson</div> -->
+      <!-- searcher -->
+      <Searcher />
+      <div class="tools">
+        <Filter
+          :selected="filterSelected"
+          :datalist="filterDatalist"
+          @change-selected="changeSort"
+        />
         <div class="user-photo">
           <img :src="user.image" alt="user-photo">
         </div>
@@ -36,7 +86,7 @@ header
 
   .container
     display: flex
-    justify-content: space-between
+    // justify-content: space-between
     align-items: center
 
   .logo
@@ -44,9 +94,13 @@ header
     // font-weight: 600
     font-size: px(24)
 
-  .user-wrap
+  .searcher
+    margin-left: 20px
+
+  .tools
     display: flex
     align-items: center
+    margin-left: auto
   .user-photo
     width: 30px
     height: 30px

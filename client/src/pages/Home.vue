@@ -1,112 +1,36 @@
 <script setup>
-import { ref, reactive } from '@vue/runtime-core'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
-import Filter from './../components/Filter.vue'
 import Posts from './../components/Posts.vue'
 
 
 const { VITE_API_URL } = import.meta.env
 const route = useRoute()
-const router = useRouter()
 const store = useStore()
 
 const { posts } = storeToRefs(store)
-const { setPosts } = store
+const { getPosts } = store
 
 const postUrl = `${VITE_API_URL}/api/posts`
 
 
-// append
-const appendQuery = async (newQuery) => {
-  // create query
-  const key = Object.keys(newQuery)[0]
-  const value = newQuery[key]
-  const query = Object.assign({}, route.query, newQuery)
-  if (!value) delete query[key]
-  // push query
-  await router.push({ query })
-}
-
 // post handler
-const getPosts = async () => {
-  // get query
-  const { query } = route
-  // set posts
-  await setPosts(postUrl, query)
-}
-
-getPosts()
-
-
-// filter handler
-const filterDatalist = reactive([
-  {
-    name: '最新貼文',
-    sort: undefined
-  },
-  {
-    name: '最舊貼文',
-    sort: 'timeasc'
-  },
-  {
-    name: '最熱門貼文',
-    sort: 'hot'
-  },
-])
-const selectedIndex = filterDatalist.findIndex(item => item.sort === route.query.sort)
-const filterSelected = reactive({
-  name: filterDatalist[selectedIndex].name,
-  sort: route.query.sort
-})
-
-const changeSort = async (li) => {
-  if (li.name === filterSelected.name) return;
-  Object.assign(filterSelected, li)
-  const { sort } = li
-  // push query
-  await appendQuery({ sort })
-  // then get data
-  getPosts()
-}
-
-
-// search content handler
-const { content } = route.query || ''
-const searchValue = ref(content)
-
-const searchPosts = async () => {
-  // const { value } = $event.target
-  // push query
-  await appendQuery({
-    content: searchValue.value
-  })
-  // then get data
-  getPosts()
-}
-
-const clearInput = () => {
-  searchValue.value = ''
-}
+getPosts(route, postUrl)
 
 </script>
 
 <template>
   <section>
     <!-- post-tools -->
-    <div class="post-tools">
-      <label class="post-search">
-        <input type="text" placeholder="搜尋貼文" v-model="searchValue" @keyup.enter="searchPosts">
-        <i class="icon-search"></i>
-        <i class="icon-cancel" @click="clearInput"></i>
-      </label>
+    <!-- <div class="post-tools">
+      <Searcher />
       <Filter
         :selected="filterSelected"
         :datalist="filterDatalist"
         @change-selected="changeSort"
       />
-    </div>
+    </div> -->
     <!-- post-content -->
     <div class="post-content">
       <template v-if="posts.length">
@@ -134,59 +58,6 @@ const clearInput = () => {
   .filter
     +rwdmax(500)
       margin-top: 5px
-  .post-search
-    flex: 1
-    position: relative
-    display: flex
-    align-items: center
-    height: 40px
-    background-color: var(--dark-white)
-    padding: 10px 20px
-    margin-right: 10px
-    overflow: hidden
-    +rwdmax(500)
-      width: 100%
-    input[type="text"]
-      width: 90%
-      border: none
-      background: none
-      font-family: $basic-font
-      font-size: px(14)
-      letter-spacing: .02em
-      font-weight: 300
-      color: var(--gray)
-      padding-left: 20px
-      transition: padding var(--trans-s)
-      &::placeholder
-        color: #ccc
-      &:focus
-        padding-left: 0
-        padding-right: 10px
-        & + .icon-search
-          opacity: 0
-          transform: translate(-20px, -50%)
-        & ~ .icon-cancel
-          opacity: 1
-          transform: translate(0, -50%)
-          pointer-events: auto
-          transition: transform var(--trans-s), opacity var(--trans-s)
-    .icon-search, .icon-cancel
-      position: absolute
-      top: 50%
-      transform: translate(0 ,-50%)
-      transition: transform var(--trans-s), opacity var(--trans-s)
-    .icon-search
-      transform: translate(0 ,-50%)
-      left: 20px
-      color: #ccc
-    .icon-cancel
-      opacity: 0
-      right: 5px
-      color: var(--gray)
-      transform: translate(20px ,-50%)
-      padding: 5px
-      cursor: pointer
-      transition: transform var(--trans-s) .2s, opacity var(--trans-s) .2s
 
 .post-content
   padding-bottom: 40px

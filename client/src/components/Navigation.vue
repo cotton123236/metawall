@@ -49,7 +49,11 @@ nav
     top: auto
     bottom: 0
     width: 100%
-
+    display: flex
+    background-color: #fff
+    border-top-left-radius: 30px
+    border-top-right-radius: 30px
+    box-shadow: 0 0 15px rgba(0, 0, 0, .1)
 
   .user-wrap
     display: flex
@@ -59,6 +63,10 @@ nav
     border-radius: 40px
     border: 1px solid var(--dark-white)
     box-shadow: 0 0 5px rgba(0, 0, 0, .1)
+    +rwdmax(900)
+      background-color: transparent
+      box-shadow: none
+      border: none
   .user-photo
     width: 50px
     height: 50px
@@ -72,6 +80,8 @@ nav
     font-size: px(18)
     line-height: 1.5
     color: var(--gray)
+    +rwdmax(900)
+      display: none
 
   .user-tools
     border-radius: 20px
@@ -80,6 +90,10 @@ nav
     // box-shadow: 0 0 5px rgba(0, 0, 0, .1)
     // padding: 12px
     margin-top: 20px
+    +rwdmax(900)
+      display: flex
+      align-items: center
+      margin-top: 0
     li
       display: flex
       align-items: center
