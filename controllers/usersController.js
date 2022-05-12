@@ -1,9 +1,9 @@
 const User = require('./../models/usersModel')
-const handlers = require('./../utils/handlers')
+const responser = require('../utils/responser')
 const status = require('../utils/status')
 
 
-const { success, error } = handlers
+const { success, error } = responser
 
 // get all
 const getAll = async (req, res, next) => {

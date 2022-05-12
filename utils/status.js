@@ -17,6 +17,11 @@ const status = {
   errorField: {
     code: 400,
     message: 'some field is required.'
+  },
+  
+  notFound: {
+    code: 404,
+    message: '404 Cannot find this page.'
   }
 }
 
