@@ -50,22 +50,22 @@ main
   padding-top: 110px
   +rwdmax(767)
     padding-top: 90px
-  
+
   .main-content
     display: flex
   .main-view
     flex: 1
     padding-left: 30px
     // padding-right: 20px
-    +rwdmax(767)
+    +rwdmax(900)
       padding-left: 0
-      padding-right: 0
   .nav-wrap
     width: 350px
     +rwdmax(1200)
       width: 300px
     +rwdmax(900)
-      display: none
+      width: 0
+    //   display: none
 
 .fade-enter-active,
 .fade-leave-active

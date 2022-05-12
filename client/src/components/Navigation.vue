@@ -43,6 +43,13 @@ nav
   position: sticky
   top: 110px
   right: 0
+  +rwdmax(900)
+    position: fixed
+    z-index: 9
+    top: auto
+    bottom: 0
+    width: 100%
+
 
   .user-wrap
     display: flex
