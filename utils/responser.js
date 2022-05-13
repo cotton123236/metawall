@@ -9,7 +9,7 @@ const success = (res, data) => {
 
 const devError = (res, error) => {
   const { code, message, stack } = error
-  res.status(code).json({
+  res.status(code).send({
     status: 'error',
     message,
     stack,
@@ -19,7 +19,7 @@ const devError = (res, error) => {
 
 const prodError = (res, error) => {
   const { code, message } = error
-  res.status(code).json({
+  res.status(code).send({
     status: 'error',
     message
   })

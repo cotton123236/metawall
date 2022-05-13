@@ -79,8 +79,8 @@ const changeSelected = async (li, index) => {
     display: flex
     justify-content: space-between
     align-items: center
-    width: 40px
-    height: 40px
+    width: 30px
+    height: 30px
     font-size: px(14)
     letter-spacing: .02em
     font-weight: 300
@@ -119,10 +119,10 @@ const changeSelected = async (li, index) => {
       border-color: transparent transparent #fff transparent
     ul
       padding: 5px 0
-      // border: 1px solid var(--dark-white)
       border-top: none
       border-radius: 10px
       background-color: #fff
+      overflow: hidden
     li
       font-size: px(14)
       font-weight: 300

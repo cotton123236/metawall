@@ -47,9 +47,7 @@ const { useModalPost, useModalLoader } = storeToRefs(store)
 
 // main
 main
-  padding-top: 110px
-  +rwdmax(767)
-    padding-top: 90px
+  padding-top: 80px
 
   .main-content
     display: flex

@@ -41,7 +41,7 @@ const { changeModalPostState } = store
 // nav
 nav
   position: sticky
-  top: 110px
+  top: 80px
   right: 0
   +rwdmax(900)
     position: fixed

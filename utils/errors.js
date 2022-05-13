@@ -7,9 +7,7 @@ const defaultErrorOptions = {
 const createError = (options) => Object.assign(new Error(), defaultErrorOptions, options)
 
 const captureError = (fn) => (req, res, next) => {
-  fn(req, res, next).catch(err => {
-    return next(err)
-  })
+  fn(req, res, next).catch(err => next(err))
 }
 
 

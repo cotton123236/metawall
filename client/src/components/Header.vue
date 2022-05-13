@@ -75,9 +75,9 @@ header
   top: 0
   left: 0
   width: 100%
-  padding-top: 20px
-  padding-bottom: 20px
-  box-shadow: 0 0 20px rgba(0, 0, 0, .2)
+  padding-top: 15px
+  padding-bottom: 15px
+  box-shadow: 0 0 15px rgba(0, 0, 0, .2)
   background-color: #fff
 
   .container
