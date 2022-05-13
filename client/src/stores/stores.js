@@ -8,7 +8,21 @@ export const useStore = defineStore('main', {
       user: {},
       posts: [],
       useModalPost: false,
-      useModalLoader: false
+      useModalLoader: false,
+      filters: [
+        {
+          name: '最新貼文',
+          sort: undefined
+        },
+        {
+          name: '最舊貼文',
+          sort: 'timeasc'
+        },
+        {
+          name: '最熱門貼文',
+          sort: 'hot'
+        }
+      ]
     }
   },
   actions: {

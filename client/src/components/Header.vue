@@ -57,11 +57,7 @@ const changeSort = async (li) => {
       <!-- searcher -->
       <Searcher />
       <div class="tools">
-        <Filter
-          :selected="filterSelected"
-          :datalist="filterDatalist"
-          @change-selected="changeSort"
-        />
+        <Filter />
         <div class="user-photo">
           <img :src="user.image" alt="user-photo">
         </div>

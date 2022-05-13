@@ -22,15 +22,6 @@ getPosts(route, postUrl)
 
 <template>
   <section>
-    <!-- post-tools -->
-    <!-- <div class="post-tools">
-      <Searcher />
-      <Filter
-        :selected="filterSelected"
-        :datalist="filterDatalist"
-        @change-selected="changeSort"
-      />
-    </div> -->
     <!-- post-content -->
     <div class="post-content">
       <template v-if="posts.length">
