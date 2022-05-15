@@ -49,7 +49,7 @@ const clearInput = () => {
   align-items: center
   height: 30px
   width: 200px
-  background-color: var(--dark-white)
+  background-color: #f8f8f8
   padding: 10px 20px
   margin-right: 10px
   border-radius: 15px
@@ -94,5 +94,5 @@ const clearInput = () => {
     transform: translate(20px ,-50%)
     padding: 5px
     cursor: pointer
-    transition: transform var(--trans-s) .2s, opacity var(--trans-s) .2s
+    transition: transform var(--trans-s) .1s, opacity var(--trans-s) .1s
 </style>

@@ -21,6 +21,16 @@ const getById = async (req, res, next) => {
   try {
     const { id } = req.params
     const data = await User.findById(id)
+    .populate({
+      path: 'follows'
+    })
+    .populate({
+      path: 'likes'
+    })
+    // .populate({
+    //   path: 'likes.user',
+    //   select: 'name image'
+    // })
     if (data) success(res, data)
     else error(res, status.errorId)
   }

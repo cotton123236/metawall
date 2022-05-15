@@ -24,7 +24,7 @@ const userSchema = new Schema({
       ref: 'Post'
     }
   ],
-  tracks: [
+  follows: [
     {
       type: mongoose.Types.ObjectId,
       ref: 'User'

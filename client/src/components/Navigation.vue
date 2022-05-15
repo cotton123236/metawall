@@ -6,7 +6,7 @@ import { useStore } from './../stores/stores'
 const store = useStore()
 
 const { user } = storeToRefs(store)
-const { changeModalPostState } = store
+const { changeModalPostState, changeModalFollowsState, changeModalLikesState } = store
 
 </script>
 
@@ -23,11 +23,11 @@ const { changeModalPostState } = store
         <i class="icon-add-square"></i>
         <span>新增貼文</span>
       </li>
-      <li class="disable">
+      <li @click="changeModalFollowsState">
         <i class="icon-bell"></i>
         <span>追蹤名單</span>
       </li>
-      <li class="disable">
+      <li @click="changeModalLikesState">
         <i class="icon-like"></i>
         <span>收藏文章</span>
       </li>
@@ -41,7 +41,7 @@ const { changeModalPostState } = store
 // nav
 nav
   position: sticky
-  top: 80px
+  top: 85px
   right: 0
   +rwdmax(900)
     position: fixed

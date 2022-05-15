@@ -5,6 +5,8 @@ import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
 import Filter from './../components/Filter.vue'
 import Searcher from './../components/Searcher.vue'
+import UserTools from './../components/UserTools.vue'
+import LogoLarge from './../assets/image/logo-large.svg'
 
 
 const { VITE_API_URL } = import.meta.env
@@ -53,14 +55,14 @@ const changeSort = async (li) => {
   <header class="space-lr">
     <div class="container mw-1200">
       <!-- logo -->
-      <router-link class="logo" to="/">MetaWall</router-link>
+      <router-link class="logo" to="/">
+        <img :src="LogoLarge" alt="">
+      </router-link>
       <!-- searcher -->
       <Searcher />
       <div class="tools">
         <Filter />
-        <div class="user-photo">
-          <img :src="user.image" alt="user-photo">
-        </div>
+        <UserTools />
       </div>
     </div>
   </header>
@@ -75,8 +77,8 @@ header
   top: 0
   left: 0
   width: 100%
-  padding-top: 15px
-  padding-bottom: 15px
+  padding-top: 10px
+  padding-bottom: 10px
   box-shadow: 0 0 15px rgba(0, 0, 0, .2)
   background-color: #fff
 
@@ -87,8 +89,8 @@ header
 
   .logo
     font-family: $title-font
-    // font-weight: 600
-    font-size: px(24)
+    img
+      height: 45px
 
   .searcher
     margin-left: 20px
@@ -97,15 +99,4 @@ header
     display: flex
     align-items: center
     margin-left: auto
-  .user-photo
-    width: 30px
-    height: 30px
-    border-radius: 50%
-    overflow: hidden
-    // margin-left: 5px
-    img
-      +fit
-  .user-name
-    font-family: $code-font
-    color: var(--gray)
 </style>

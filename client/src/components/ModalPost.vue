@@ -44,6 +44,7 @@ const postNewPost = async () => {
 
 <template>
   <div class="modal-wrapper modal-post">
+    <div class="modal-bg" @click="changeModalPostState"></div>
     <div class="modal-content">
       <div class="modal">
         <div class="close-btn" @click="changeModalPostState"></div>
@@ -63,7 +64,7 @@ const postNewPost = async () => {
         </div>
         <div class="modal-foot">
           <div
-            class="submit-btn"
+            class="rect-btn fill"
             :class="{ disable: !postContent }"
             @click="postNewPost"
           >發布貼文</div>
@@ -77,6 +78,8 @@ const postNewPost = async () => {
 @import ./../assets/sass/mixin
 
 // modal-post
+.modal-content
+  pointer-events: none
 .modal
   position: relative
   width: 90%
@@ -84,6 +87,7 @@ const postNewPost = async () => {
   // border-radius: 8px
   background-color: #fff
   margin: auto
+  pointer-events: auto
   .close-btn
     position: absolute
     z-index: 2

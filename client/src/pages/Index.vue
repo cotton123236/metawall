@@ -6,12 +6,14 @@ import Header from './../components/Header.vue'
 import Navigation from './../components/Navigation.vue'
 import ModalPost from './../components/ModalPost.vue'
 import ModalLoader from './../components/ModalLoader.vue'
+import ModalFollows from './../components/ModalFollows.vue'
+import ModalLikes from './../components/ModalLikes.vue'
 
 
 // ModalPost control
 const store = useStore()
 
-const { useModalPost, useModalLoader } = storeToRefs(store)
+const { useModalPost, useModalFollows, useModalLikes, useModalLoader } = storeToRefs(store)
 
 </script>
 
@@ -35,6 +37,15 @@ const { useModalPost, useModalLoader } = storeToRefs(store)
       <Transition name="clip">
         <ModalPost v-if="useModalPost" />
       </Transition>
+      <Transition name="clip">
+        <ModalFollows v-if="useModalFollows" />
+      </Transition>
+      <Transition name="clip">
+        <ModalFollows v-if="useModalFollows" />
+      </Transition>
+      <Transition name="clip">
+        <ModalLikes v-if="useModalLikes" />
+      </Transition>
       <Transition name="fade">
         <ModalLoader v-if="useModalLoader" />
       </Transition>
@@ -47,7 +58,7 @@ const { useModalPost, useModalLoader } = storeToRefs(store)
 
 // main
 main
-  padding-top: 80px
+  padding-top: 85px
 
   .main-content
     display: flex

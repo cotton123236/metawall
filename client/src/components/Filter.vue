@@ -11,15 +11,17 @@ const store = useStore()
 const postUrl = `${VITE_API_URL}/api/posts`
 
 // open and close control
-const isActive = ref(false)
+const filterActive = ref(false)
 
 const activeControl = () => {
-  isActive.value = !isActive.value
+  filterActive.value = !filterActive.value
 }
 
 onMounted(() => {
-  document.body.addEventListener('click', () => {
-    isActive.value = false
+  document.body.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('filter') && !e.target.closest('.filter')) {
+      filterActive.value = false
+    }
   })
 })
 
@@ -42,7 +44,7 @@ const changeSelected = async (li, index) => {
 
 
 <template>
-  <div class="filter" :class="{ active: isActive }" @click.stop="activeControl">
+  <div class="filter" :class="{ active: filterActive }" @click="activeControl">
     <div class="selected">
       <div class="inner">
         <i class="icon-filter"></i>
@@ -75,6 +77,7 @@ const changeSelected = async (li, index) => {
       opacity: 1
       transform: translate(-50%, 0)
       pointer-events: auto
+
   .selected
     display: flex
     justify-content: space-between
@@ -100,7 +103,7 @@ const changeSelected = async (li, index) => {
   .datalist
     position: absolute
     z-index: 2
-    top: calc(100% + 10px)
+    top: calc(100% + 15px)
     left: 50%
     width: 150px
     opacity: 0
