@@ -89,7 +89,7 @@ form
     display: block
     position: relative
     & + label
-      margin-top: 15px
+      margin-top: 10px
     &[data-warning]:not([data-warning=""])
       margin-bottom: 25px
       &::after
@@ -156,6 +156,8 @@ form
 
 // rect-btn
 .rect-btn
+  position: relative
+  z-index: 1
   width: 100%
   padding: 15px
   text-align: center
@@ -164,14 +166,28 @@ form
   cursor: pointer
   transition: background-color var(--trans-s), opacity var(--trans-s), color var(--trans-s), border var(--trans-s)
   border: 1px solid transparent
+  // overflow: hidden
   &:hover
     border: 1px solid var(--primary-blue-light)
     color: var(--primary-blue-dark)
   &.fill
-    background-color: var(--primary-blue)
+    border: 1px solid transparent
     color: #fff
+    &::before
+      z-index: -2
+      background-image: linear-gradient(to right, var(--primary-blue-light), var(--primary-blue-dark))
+      +pseudo
+      +posFill
+    &::after
+      z-index: -1
+      background-image: linear-gradient(to right, var(--primary-blue), #010f18)
+      opacity: 0
+      transition: opacity var(--trans-m)
+      +pseudo
+      +posFill
     &:hover
-      background-color: var(--primary-blue-dark)
+      &::after
+        opacity: 1
   &.disable
     opacity: .2
     pointer-events: none

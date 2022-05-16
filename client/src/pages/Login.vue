@@ -9,12 +9,7 @@ import LogoLarge from './../assets/image/logo-large.svg'
 const router = useRouter()
 
 // login mode control
-const isLoginMode = ref(true)
 const signupSwiperInstance = ref(null)
-
-const changeMode = () => {
-  isLoginMode.value = !isLoginMode.value
-}
 
 const signupSwiperInit = (swiper) => {
   signupSwiperInstance.value = swiper
@@ -26,6 +21,10 @@ const slidePrev = () => {
 
 const slideNext = () => {
   signupSwiperInstance.value.slideNext()
+}
+
+const loginSuccess = () => {
+  router.push({ path: '/' })
 }
 
 const signupSuccess = () => {
@@ -40,8 +39,6 @@ const signupSuccess = () => {
         <div class="logo">
           <img :src="LogoLarge" alt="">
         </div>
-        <p class="brief" v-if="isLoginMode">到元宇宙展開你的全新社交圈！</p>
-        <p class="brief" v-if="!isLoginMode">註冊加入元宇宙！</p>
         <!-- login & sign-up -->
         <swiper
           class="swiper-no-swiping"
@@ -52,6 +49,7 @@ const signupSuccess = () => {
         >
           <!-- login -->
           <swiper-slide>
+            <p class="brief">到元宇宙展開你的全新社交圈！</p>
             <form>
               <label data-warning>
                 <input id="email" type="text" required>
@@ -61,12 +59,13 @@ const signupSuccess = () => {
                 <input id="password" type="password" required>
                 <span>Password</span>
               </label>
-              <div class="rect-btn fill login-btn">登入</div>
+              <div class="rect-btn fill login-btn" @click="loginSuccess">登入</div>
               <div class="rect-btn signup-btn" @click="slideNext">註冊</div>
             </form>
           </swiper-slide>
           <!-- sign-up email & password -->
           <swiper-slide>
+            <p class="brief">註冊加入元宇宙！</p>
             <form>
               <label data-warning>
                 <input id="email" type="text" required>
@@ -86,12 +85,14 @@ const signupSuccess = () => {
           </swiper-slide>
           <!-- sign-up name -->
           <swiper-slide>
+            <p class="brief">建立屬於你的元宇宙名稱！</p>
             <form>
               <label data-warning>
                 <input id="name" type="text" required>
                 <span>Name</span>
               </label>
               <div class="rect-btn signup-btn fill" @click="signupSuccess">開啟元宇宙</div>
+              <div class="rect-btn signup-btn" @click="slidePrev">回上一步</div>
             </form>
           </swiper-slide>
         </swiper>
@@ -124,11 +125,13 @@ main
     width: 100px
     margin: auto
 
+  .swiper
+    margin-top: 20px
+
   .brief
     font-size: px(14)
     line-height: 1.5
     color: var(--light-gray)
-    margin-top: 20px
     text-align: center
 
   form

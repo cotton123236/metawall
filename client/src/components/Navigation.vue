@@ -84,7 +84,7 @@ nav
       display: none
 
   .user-tools
-    border-radius: 20px
+    // border-radius: 20px
     // background-color: #fff
     // border: 1px solid var(--dark-white)
     // box-shadow: 0 0 5px rgba(0, 0, 0, .1)
@@ -108,16 +108,22 @@ nav
         // background-color: #fff
         // box-shadow: 0 0 5px rgba(0, 0, 0, .1)
         // border: 1px solid var(--dark-white)
+        i
+          color: var(--primary-pink)
+          transform: translateX(10px)
+        span
+          color: var(--primary-blue)
+          transform: translateX(10px)
       &.disable
         pointer-events: none
         opacity: .2
       i
-        // display: flex
-        // justify-content: center
-        // align-items: center
-        // width: 50px
+        display: inline-block
         font-size: px(20)
         margin-right: 25px
+        transition: var(--trans-s)
       span
+        display: inline-block
         font-size: px(14)
+        transition: var(--trans-s)
 </style>
