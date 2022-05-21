@@ -1,11 +1,9 @@
 <script setup>
 import { ref, onMounted } from '@vue/runtime-core'
-import { storeToRefs } from 'pinia'
-import { useStore } from '../stores/stores'
+import { useUserStore } from './../stores/userStore'
 
 
-const store = useStore()
-const { user } = storeToRefs(store)
+const userStore = useUserStore()
 
 // open and close control
 const userToolsActive = ref(false)
@@ -26,18 +24,18 @@ onMounted(() => {
 <template>
   <div class="user-tools" :class="{ active: userToolsActive }" @click="activeControl">
     <div class="user-photo">
-      <img :src="user.image" alt="user-photo">
+      <img :src="userStore.image" alt="user-photo">
     </div>
     <div class="user-dropdown">
       <ul>
         <li>
-          <router-link to="/">查看個人檔案</router-link>
+          <router-link :to="userStore._id">查看個人檔案</router-link>
         </li>
         <li>
           <router-link to="/">設定與資料</router-link>
         </li>
         <li>
-          <router-link to="/">登出</router-link>
+          <router-link to="/login">登出</router-link>
         </li>
       </ul>
     </div>
@@ -45,7 +43,7 @@ onMounted(() => {
 </template>
 
 <style lang="sass">
-@import ./../assets/sass/mixin
+@import ./../assets/sass/base/mixin
 
 .user-tools
   position: relative

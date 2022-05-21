@@ -1,27 +1,31 @@
 <script setup>
-import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
+import { useUserStore } from './../stores/userStore'
+import { useModalStore } from '../stores/modalStore'
 
 
 const store = useStore()
-const { user } = storeToRefs(store)
-const { useDateFormat, changeModalFollowsState } = store
+const userStore = useUserStore()
+const modalStore = useModalStore()
+
+const { useDateFormat } = store
+const { closeModalFollows } = modalStore
 
 </script>
 
 <template>
   <div class="modal-wrapper modal-follows">
-    <div class="modal-bg" @click="changeModalFollowsState"></div>
+    <div class="modal-bg" @click="closeModalFollows"></div>
     <div class="modal-content">
       <div class="modal">
-        <div class="close-btn" @click="changeModalFollowsState"></div>
+        <div class="close-btn" @click="closeModalFollows"></div>
         <div class="modal-head">
           <span>追蹤名單</span>
         </div>
         <div class="modal-body">
           <ul>
             <li
-              v-for="follow in user.follows"
+              v-for="follow in userStore.follows"
               :key="follow._id"
             >
               <div class="info">
@@ -43,7 +47,8 @@ const { useDateFormat, changeModalFollowsState } = store
 </template>
 
 <style lang="sass" scoped>
-@import ./../assets/sass/mixin
+@import ./../assets/sass/base/variables
+@import ./../assets/sass/base/mixin
 
 // modal-post
 .modal-content
@@ -94,8 +99,6 @@ const { useDateFormat, changeModalFollowsState } = store
     .headshot
       width: 50px
       height: 50px
-      border-radius: 50%
-      overflow: hidden
       margin-right: 15px
       img
         +fit

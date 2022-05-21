@@ -1,33 +1,37 @@
 <script setup>
-import { storeToRefs } from 'pinia'
-import { useStore } from './../stores/stores'
+import { useUserStore } from './../stores/userStore'
+import { useModalStore } from './../stores/modalStore'
 
 
-const store = useStore()
+const userStore = useUserStore()
+const modalStore = useModalStore()
 
-const { user } = storeToRefs(store)
-const { changeModalPostState, changeModalFollowsState, changeModalLikesState } = store
+const {
+  openModalPost,
+  openModalFollows,
+  openModalLikes
+} = modalStore
 
 </script>
 
 <template>
   <nav>
-    <div class="user-wrap">
+    <router-link class="user-wrap" :to="userStore._id">
       <div class="user-photo">
-        <img :src="user.image" alt="user-photo">
+        <img :src="userStore.image" alt="user-photo">
       </div>
-      <div class="user-name">{{ user.name }}</div>
-    </div>
+      <div class="user-name">{{ userStore.name }}</div>
+    </router-link>
     <ul class="user-tools">
-      <li @click="changeModalPostState">
+      <li @click="openModalPost">
         <i class="icon-add-square"></i>
         <span>新增貼文</span>
       </li>
-      <li @click="changeModalFollowsState">
+      <li @click="openModalFollows">
         <i class="icon-bell"></i>
         <span>追蹤名單</span>
       </li>
-      <li @click="changeModalLikesState">
+      <li @click="openModalLikes">
         <i class="icon-like"></i>
         <span>收藏文章</span>
       </li>
@@ -36,7 +40,8 @@ const { changeModalPostState, changeModalFollowsState, changeModalLikesState } =
 </template>
 
 <style lang="sass">
-@import ./../assets/sass/mixin
+@import ./../assets/sass/base/variables
+@import ./../assets/sass/base/mixin
 
 // nav
 nav
@@ -120,4 +125,6 @@ nav
         margin-right: 25px
       span
         font-size: px(14)
+        +rwdmax(767)
+          display: none
 </style>

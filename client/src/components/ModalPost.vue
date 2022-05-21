@@ -1,15 +1,19 @@
 <script setup>
 import { inject, ref } from '@vue/runtime-core'
 import { useRoute } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import { useStore } from './../stores/stores'
+import { useUserStore } from './../stores/userStore'
+import { useModalStore } from '../stores/modalStore'
 
 const { VITE_API_URL } = import.meta.env
 const axios = inject('axios')
 const route = useRoute()
 const store = useStore()
-const { user } = storeToRefs(store)
-const { setPosts, changeModalPostState, changeModalLoaderState } = store
+const userStore = useUserStore()
+const modalStore = useModalStore()
+
+const { setPosts } = store
+const { closeModalPost, openModalLoader, closeModalLoader } = modalStore
 
 const postUrl = `${VITE_API_URL}/api/posts`
 
@@ -26,15 +30,16 @@ const postContent = ref('')
 
 const postNewPost = async () => {
   if (!postContent.value) return;
-  changeModalLoaderState()
+  openModalLoader()
   const data = {
     content: postContent.value,
-    user: user.value._id
+    user: userStore._id
   }
+  // console.log(data)
   try {
-    const res = await axios.post(postUrl, data)
-    changeModalLoaderState()
-    changeModalPostState()
+    await axios.post(postUrl, data)
+    closeModalLoader()
+    closeModalPost()
     getPosts()
   }
   catch {}
@@ -44,19 +49,19 @@ const postNewPost = async () => {
 
 <template>
   <div class="modal-wrapper modal-post">
-    <div class="modal-bg" @click="changeModalPostState"></div>
+    <div class="modal-bg" @click="closeModalPost"></div>
     <div class="modal-content">
       <div class="modal">
-        <div class="close-btn" @click="changeModalPostState"></div>
+        <div class="close-btn" @click="closeModalPost"></div>
         <div class="modal-head">
           <span>新增貼文</span>
         </div>
         <div class="modal-body">
           <div class="info">
             <div class="headshot">
-              <img :src="user.image" alt="user-photo">
+              <img :src="userStore.image" alt="user-photo">
             </div>
-            <div class="name">{{ user.name }}</div>
+            <div class="name">{{ userStore.name }}</div>
           </div>
           <div class="content">
             <textarea placeholder="在想些什麼呢？" v-model="postContent"></textarea>
@@ -75,7 +80,8 @@ const postNewPost = async () => {
 </template>
 
 <style lang="sass" scoped>
-@import ./../assets/sass/mixin
+@import ./../assets/sass/base/variables
+@import ./../assets/sass/base/mixin
 
 // modal-post
 .modal-content
@@ -123,8 +129,6 @@ const postNewPost = async () => {
     .headshot
       width: 50px
       height: 50px
-      border-radius: 50%
-      overflow: hidden
       margin-right: 15px
       img
         +fit
