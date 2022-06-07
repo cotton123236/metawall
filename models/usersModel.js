@@ -12,7 +12,15 @@ const userSchema = new Schema({
     required: [true, 'field "email" is required.'],
     unique: true,
     lowercase: true,
-    select: false
+    select: false,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: [true, 'field "password" is required.'],
+    minlength: 8,
+    select: false,
+    trim: true
   },
   image: {
     type: String,

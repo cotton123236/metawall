@@ -6,19 +6,24 @@ const status = {
 
   error: {
     code: 400,
-    message: 'cannot find data or format error.'
+    message: 'Cannot find data or format error.'
   },
 
   errorId: {
     code: 400,
-    message: 'cannot find data by id.'
+    message: 'Cannot find data by id.'
   },
 
   errorField: {
     code: 400,
-    message: 'some field is required.'
+    message: 'Some field is required.'
   },
-  
+
+  errorAuth: {
+    code: 401,
+    message: 'Authorization error.'
+  },
+
   notFound: {
     code: 404,
     message: '404 Cannot find this page.'
