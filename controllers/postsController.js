@@ -5,10 +5,10 @@ const status = require('../utils/status')
 
 
 const { success } = responser
-const { createError } = errors
+const { createError, captureError } = errors
 
 // get all
-const getAll = async (req, res, next) => {
+const getAll = captureError(async (req, res, next) => {
   const timesort = req.query.sort === 'hot' ? { likes: -1 } : req.query.sort === 'timeasc' ? 'createdAt' : '-createdAt'
   const query = req.query.content ? { 'content': new RegExp(req.query.content) } : {}
   const data = await Post.find(query)
@@ -18,18 +18,18 @@ const getAll = async (req, res, next) => {
   })
   .sort(timesort)
   success(res, data)
-}
+})
 
 // get one by id
-const getById = async (req, res, next) => {
+const getById = captureError(async (req, res, next) => {
   const { id } = req.params
   const data = await Post.findById(id)
   if (data) success(res, [data])
   else return next(createError(status.errorId))
-}
+})
 
 // post one or many
-const postOneOrMany = async (req, res, next) => {
+const postOneOrMany = captureError(async (req, res, next) => {
   const { body } = req
   const isArray = Array.isArray(body)
   const getContent = (item) => {
@@ -50,25 +50,25 @@ const postOneOrMany = async (req, res, next) => {
     data = [await Post.create(getContent(body))]
   }
   success(res, data)
-}
+})
 
 // delete all
-const deleteAll = async (req, res, next) => {
+const deleteAll = captureError(async (req, res, next) => {
   await Post.deleteMany({})
   const data = await Post.find()
   success(res, data)
-}
+})
 
 // delete by id
-const deleteById = async (req, res, next) => {
+const deleteById = captureError(async (req, res, next) => {
   const { id } = req.params
   const data = [await Post.findByIdAndDelete(id)]
   if (data) success(res, [data])
   else return next(createError(status.errorId))
-}
+})
 
 // patch by id
-const patchById = async (req, res, next) => {
+const patchById = captureError(async (req, res, next) => {
   const { body } = req
   const { id } = req.params
   const { user, content } = body
@@ -84,7 +84,7 @@ const patchById = async (req, res, next) => {
   const data = await Post.findById(id)
   if (data) success(res, [data])
   else return next(createError(status.errorId))
-}
+})
 
 
 module.exports = {

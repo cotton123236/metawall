@@ -22,9 +22,15 @@ const userSchema = new Schema({
     select: false,
     trim: true
   },
-  image: {
+  gender: {
+    // 男性存 0，女性存 1，未定義存 2
+    type: Number,
+    default: 2,
+    enum: [0, 1, 2],
+  },
+  avatar: {
     type: String,
-    default: ''
+    trim: true
   },
   likes: [
     {
