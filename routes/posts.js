@@ -1,23 +1,21 @@
 const express = require('express')
-const errors = require('./../utils/errors')
 const postsController = require('./../controllers/postsController')
 
 
-const { captureError } = errors
 const router = express.Router()
 
 // get all
-router.get('/', captureError(postsController.getAll))
-// // get by id
-router.get('/:id', captureError(postsController.getById))
+router.get('/', postsController.getAll)
+// get by id
+router.get('/:id', postsController.getById)
 // post one or many
-router.post('/', captureError(postsController.postOneOrMany))
+router.post('/', postsController.postOneOrMany)
 // delete all
-router.delete('/', captureError(postsController.deleteAll))
+router.delete('/', postsController.deleteAll)
 // delete by id
-router.delete('/:id', captureError(postsController.deleteById))
+router.delete('/:id', postsController.deleteById)
 // patch by id
-router.patch('/:id', captureError(postsController.patchById))
+router.patch('/:id', postsController.patchById)
 
 
 

@@ -11,30 +11,16 @@ const {
 
 
 const { success } = responser
-const { createError } = errors
+const { createError, captureError } = errors
 
 // get all
-const getAll = async (req, res, next) => {
+const getAll = captureError(async (req, res, next) => {
   const data = await User.find()
   success(res, data)
-}
-
-// get by id
-const getById = async (req, res, next) => {
-  const { id } = req.params
-  const data = await User.findById(id)
-  .populate({
-    path: 'follows'
-  })
-  .populate({
-    path: 'likes'
-  })
-  if (data) success(res, data)
-  else return next(createError(status.errorId))
-}
+})
 
 // 註冊
-const signUp = async (req, res, next) => {
+const signUp = captureError(async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body
   // 驗證
   if (!name || !email || !password || !confirmPassword) {
@@ -79,10 +65,10 @@ const signUp = async (req, res, next) => {
     status: 'success',
     token: createJWT(user._id)
   })
-}
+})
 
 // 登入
-const signIn = async (req, res, next) => {
+const signIn = captureError(async (req, res, next) => {
   const { email, password } = req.body
   // 基本驗證
   if (!email || !password) {
@@ -95,7 +81,6 @@ const signIn = async (req, res, next) => {
       message: 'Please sign up first.'
     }))
   }
-  console.log(password, user.password)
   // 比對密碼
   const isPasswordCorrect = await comparePassword(password, user.password)
   if (!isPasswordCorrect) {
@@ -109,11 +94,11 @@ const signIn = async (req, res, next) => {
     status: 'success',
     token: createJWT(user._id)
   })
-}
+})
 
 // 更新密碼
-const updatePassword = async (req, res, next) => {
-  const { user } = req
+const updatePassword = captureError(async (req, res, next) => {
+  const { user: reqUser } = req
   const { password, confirmPassword } = req.body
   // 基本驗證
   if (!password || !confirmPassword) {
@@ -132,6 +117,7 @@ const updatePassword = async (req, res, next) => {
     }))
   }
   // 若與舊密碼一樣
+  const user = await User.findOne({ _id: reqUser.id }).select('+password')
   const isPasswordTheSame = await comparePassword(password, user.password)
   if (isPasswordTheSame) {
     return next(createError({
@@ -141,19 +127,72 @@ const updatePassword = async (req, res, next) => {
   }
   // 加密新密碼
   const hash = await bcryptPassword(password)
-  await User.updateOne({ _id: user._id }, { password: hash })
+  await User.updateOne({ _id: reqUser._id }, { password: hash })
 
   res.status(201).send({
     status: 'success',
     message: 'Update password success.'
   })
-}
+})
+
+// 取得個人資料 by id
+const getProfile = captureError(async (req, res, next) => {
+  const { id } = req.params
+  if (!id) return next(createError(status.errorId))
+
+  const isUserExist = await User.findById(id)
+  if (!isUserExist) return next(createError(status.errorId))
+
+  success(res, isUserExist)
+})
+
+// 修改個人 profile
+const updateProfile = captureError(async (req, res, next) => {
+  const { user } = req
+  const { name, gender: genderStr, avatar } = req.body
+  // 基本驗證
+  if (!name) {
+    return next(createError(status.errorField))
+  }
+  if (!validator.isLength(name, { min: 2 })) {
+    return next(createError({
+      code: 400,
+      message: 'Field "name" needs at least 2 characters.'
+    }))
+  }
+  const gender = parseInt(genderStr)
+  if (gender !== 0 && gender !== 1 && gender !== 2) {
+    return next(createError({
+      code: 400,
+      message: 'Field "gender" is not expected value.'
+    }))
+  }
+  if (avatar && validator.isURL(avatar, { protocols: ['https'] })) {
+    return next(createError({
+      code: 400,
+      message: 'Field "avatar" url is wrong.'
+    }))
+  }
+  // update
+  const pathcData = {
+    name,
+    gender
+  }
+  if (avatar) pathcData.avatar = avatar
+  const data = await User.findByIdAndUpdate(user.id, pathcData, { new: true })
+
+  res.status(201).send({
+    status: 'success',
+    data
+  })
+})
 
 
 module.exports = {
   getAll,
-  getById,
   signUp,
   signIn,
-  updatePassword
+  updatePassword,
+  getProfile,
+  updateProfile
 }
